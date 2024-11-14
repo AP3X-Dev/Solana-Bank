@@ -61,7 +61,7 @@ A modern, secure banking application built on the Solana blockchain. Experience 
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/solana-bank.git
+git clone https://github.com/AP#X-DEV/solana-bank.git
 cd solana-bank
 ```
 
