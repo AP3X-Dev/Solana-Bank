@@ -1,4 +1,4 @@
-# SolanaBank - Web3 Banking Simulation
+# SolanaBank - Web3 Banking Application
 
 ![SolanaBank](https://images.unsplash.com/photo-1605792657660-596af9009e82?auto=format&fit=crop&w=1200&h=400&q=80)
 
