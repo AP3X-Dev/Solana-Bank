@@ -142,4 +142,4 @@ For support, please open an issue in the GitHub repository or contact our team a
 
 ---
 
-Built with ❤️ by the SolanaBank team
+Built with ❤️ by AP3X
