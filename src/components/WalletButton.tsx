@@ -1,50 +1,48 @@
 import React from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
-import { Wallet, LogOut } from 'lucide-react';
 import { useSolana } from '../context/SolanaContext';
+import { Wallet } from 'lucide-react';
 
 export const WalletButton = () => {
-  const { connected, disconnect } = useWallet();
   const { error, clearError } = useSolana();
+  const { connected, publicKey } = useWallet();
 
-  const handleDisconnect = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    clearError();
-    await disconnect();
+  // Custom styling for the wallet button
+  const customStyles = {
+    button: "bg-dark-light hover:bg-solana-gradient text-light-text hover:text-white rounded-xl transition-all duration-200 flex items-center h-10 px-4 border border-dark-light",
+    connected: "bg-dark-light hover:bg-solana-gradient text-light-text hover:text-white",
+    icon: "mr-2"
   };
 
   return (
-    <div className="relative flex items-center space-x-2">
+    <div className="relative">
       {error && (
-        <div className="absolute top-full left-0 right-0 mt-2 p-2 bg-red-100 border border-red-400 text-red-700 text-sm rounded">
-          {error}
-          <button
-            onClick={clearError}
-            className="ml-2 text-red-500 hover:text-red-700"
-          >
-            ✕
-          </button>
+        <div className="absolute top-full left-0 right-0 mt-2 p-3 bg-dark-card border border-red-500 text-red-400 text-sm rounded-xl z-10 shadow-card">
+          <div className="flex justify-between items-start">
+            <span>{error}</span>
+            <button
+              onClick={clearError}
+              className="ml-2 text-red-400 hover:text-red-300"
+            >
+              ✕
+            </button>
+          </div>
         </div>
       )}
-      
-      <WalletMultiButton className="!bg-indigo-600 hover:!bg-indigo-700 !h-10">
-        <div className="flex items-center space-x-2">
-          <Wallet size={20} />
-          <span>{connected ? 'Wallet Connected' : 'Connect Wallet'}</span>
+
+      {/* Custom styled wallet button */}
+      <WalletMultiButton className="!bg-transparent hover:!bg-transparent !border-0 !p-0">
+        <div className={customStyles.button}>
+          <Wallet size={18} className={customStyles.icon} />
+          <span>
+            {connected
+              ? `${publicKey?.toString().slice(0, 4)}...${publicKey?.toString().slice(-4)}`
+              : 'Connect Wallet'
+            }
+          </span>
         </div>
       </WalletMultiButton>
-      
-      {connected && (
-        <button
-          onClick={handleDisconnect}
-          className="flex items-center space-x-1 px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md transition-colors"
-        >
-          <LogOut size={20} />
-          <span>Disconnect</span>
-        </button>
-      )}
     </div>
   );
 };

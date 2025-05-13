@@ -5,9 +5,12 @@ import { useAuth } from '../context/AuthContext';
 import { Account } from '../types';
 import { AccountCard } from '../components/AccountCard';
 import { QuickActions } from '../components/QuickActions';
-import { FinancialInsights } from '../components/FinancialInsights';
+import { WalletInsights } from '../components/WalletInsights';
 import { getTokenBalance } from '../utils/solana';
-import { PlusCircle } from 'lucide-react';
+import { storage } from '../utils/storage';
+import { PlusCircle, Bot } from 'lucide-react';
+import { Button } from '../components/Button';
+import { Card, CardGrid } from '../components/Card';
 
 export const Dashboard = () => {
   const { user } = useAuth();
@@ -28,7 +31,11 @@ export const Dashboard = () => {
         const balance = await getTokenBalance(connection, wallet.publicKey);
         setSolBalance(balance);
 
-        // Create a Solana account representation
+        // Get existing accounts from storage
+        const existingAccounts = storage.getAccounts()
+          .filter(a => a.userId === user.id);
+
+        // Create a Solana account representation for the main wallet
         const mainWalletAccount: Account = {
           id: wallet.publicKey.toString(),
           userId: user.id,
@@ -45,7 +52,28 @@ export const Dashboard = () => {
           lastActivityDate: new Date().toISOString()
         };
 
-        setAccounts([mainWalletAccount]);
+        // Check if main wallet account already exists in storage
+        const mainAccountExists = existingAccounts.some(a => a.id === wallet.publicKey?.toString());
+
+        // If main account doesn't exist, add it to storage
+        if (!mainAccountExists) {
+          const updatedAccounts = [...existingAccounts, mainWalletAccount];
+          storage.setAccounts(updatedAccounts);
+        } else {
+          // Update the balance of the existing main account
+          const updatedAccounts = existingAccounts.map(account =>
+            account.id === wallet.publicKey?.toString()
+              ? { ...account, balance: balance, lastActivityDate: new Date().toISOString() }
+              : account
+          );
+          storage.setAccounts(updatedAccounts);
+        }
+
+        // Get all accounts after update
+        const allAccounts = storage.getAccounts()
+          .filter(a => a.userId === user.id);
+
+        setAccounts(allAccounts);
       }
     };
 
@@ -53,48 +81,74 @@ export const Dashboard = () => {
   }, [user, navigate, wallet.publicKey, connection]);
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-7xl">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Welcome back, {user?.firstName}!</h1>
-        <p className="text-gray-600">Manage your Solana wallet and transactions</p>
+    <div className="container mx-auto px-4 py-6 max-w-7xl">
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-light-text bg-solana-gradient bg-clip-text text-transparent">Welcome back</h1>
+        <p className="text-muted-text">Manage your Solana wallet and transactions</p>
       </div>
 
-      <div className="grid gap-8">
+      <div className="grid gap-6">
         <QuickActions />
-        
-        <FinancialInsights accounts={accounts} />
 
-        <div>
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold text-gray-900">Your Accounts</h2>
-            <button
+        <WalletInsights />
+
+        <div className="flex justify-between items-center mb-2">
+          <h2 className="text-xl font-bold text-light-text">Your Accounts</h2>
+          <Button
+            variant="primary"
+            size="sm"
+            icon={PlusCircle}
+            onClick={() => navigate('/account/new')}
+          >
+            New Account
+          </Button>
+        </div>
+
+        <CardGrid columns={2}>
+          {accounts.map(account => (
+            <AccountCard
+              key={account.id}
+              account={account}
+              onClick={() => navigate(`/account/${account.id}`)}
+            />
+          ))}
+
+          {accounts.length < 2 && (
+            <Card
+              title="Bot Trading"
+              icon={Bot}
+              iconBackground="blue"
+              hoverable
               onClick={() => navigate('/account/new')}
-              className="flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
             >
-              <PlusCircle size={20} className="mr-2" />
-              New Account
-            </button>
-          </div>
-          
-          <div className="grid md:grid-cols-2 gap-6">
-            {accounts.map(account => (
-              <AccountCard
-                key={account.id}
-                account={account}
-                onClick={() => navigate(`/account/${account.id}`)}
-              />
-            ))}
-
-            {!wallet.connected && (
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6">
-                <div className="space-y-4">
-                  <h3 className="text-lg font-medium text-gray-900">Connect Your Wallet</h3>
-                  <p className="text-gray-500">Connect your Solana wallet to view your balance and make transactions.</p>
+              <div className="flex flex-col h-full">
+                <p className="text-muted-text text-sm mb-4">
+                  Create a trading bot account to automate your Solana trading strategies.
+                </p>
+                <div className="mt-auto">
+                  <div className="text-2xl font-bold bg-solana-gradient bg-clip-text text-transparent">
+                    0.5000 SOL
+                  </div>
+                  <div className="mt-4 pt-2 border-t border-dark-light flex justify-between items-center">
+                    <span className="text-xs text-muted-text">Trading</span>
+                    <span className="text-xs px-2 py-1 rounded-full bg-dark-light text-muted-text">
+                      Bot
+                    </span>
+                  </div>
                 </div>
               </div>
-            )}
-          </div>
-        </div>
+            </Card>
+          )}
+
+          {!wallet.connected && (
+            <div className="border border-dark-light border-dashed rounded-2xl p-6 bg-dark-card">
+              <div className="space-y-4 text-center">
+                <h3 className="text-lg font-medium text-light-text">Connect Your Wallet</h3>
+                <p className="text-muted-text">Connect your Solana wallet to view your balance and make transactions.</p>
+              </div>
+            </div>
+          )}
+        </CardGrid>
       </div>
     </div>
   );

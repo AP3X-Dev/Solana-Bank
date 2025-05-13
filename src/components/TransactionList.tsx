@@ -1,7 +1,7 @@
 import React from 'react';
 import { Transaction } from '../types';
 import { formatCurrency, formatDate } from '../utils/format';
-import { ArrowUpRight, ArrowDownRight, ArrowLeftRight } from 'lucide-react';
+import { ArrowUpRight, ArrowDownRight, ArrowLeftRight, ArrowRight } from 'lucide-react';
 
 interface TransactionListProps {
   transactions: Transaction[];
@@ -31,41 +31,39 @@ export const TransactionList: React.FC<TransactionListProps> = ({ transactions }
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden">
-      <div className="px-6 py-4 border-b border-gray-200">
-        <h2 className="text-lg font-semibold text-gray-900">Transaction History</h2>
-      </div>
-      
+    <div>
       {transactions.length === 0 ? (
-        <div className="p-6 text-center text-gray-500">No transactions found</div>
+        <div className="p-6 text-center text-muted-text">No transactions found</div>
       ) : (
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+          <table className="min-w-full">
+            <thead className="border-b border-dark-light">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                <th className="px-4 py-2 text-left text-xs font-medium text-muted-text uppercase">Type</th>
+                <th className="px-4 py-2 text-left text-xs font-medium text-muted-text uppercase">Date</th>
+                <th className="px-4 py-2 text-left text-xs font-medium text-muted-text uppercase">Description</th>
+                <th className="px-4 py-2 text-right text-xs font-medium text-muted-text uppercase">Amount</th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="divide-y divide-dark-light">
               {transactions.map((transaction) => (
-                <tr key={transaction.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap">
+                <tr key={transaction.id} className="hover:bg-dark-light/30">
+                  <td className="px-4 py-3 whitespace-nowrap">
                     <div className="flex items-center">
-                      {getTransactionIcon(transaction.type)}
-                      <span className="ml-2 text-sm text-gray-900">{transaction.type}</span>
+                      {transaction.type === 'TRANSFER' && (
+                        <ArrowRight size={14} className="text-blue-500" />
+                      )}
+                      <span className="ml-2 text-xs text-muted-text uppercase">{transaction.type}</span>
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-4 py-3 whitespace-nowrap text-xs text-muted-text">
                     {formatDate(transaction.date)}
                   </td>
-                  <td className="px-6 py-4 text-sm text-gray-900">
+                  <td className="px-4 py-3 text-xs text-light-text">
                     {transaction.description}
                   </td>
-                  <td className={`px-6 py-4 whitespace-nowrap text-sm font-medium text-right ${getAmountColor(transaction.type)}`}>
-                    {transaction.type === 'DEPOSIT' ? '+' : '-'}{formatCurrency(Math.abs(transaction.amount))}
+                  <td className={`px-4 py-3 whitespace-nowrap text-xs font-medium text-right ${getAmountColor(transaction.type)}`}>
+                    {transaction.type === 'DEPOSIT' ? '+' : ''}{formatCurrency(Math.abs(transaction.amount))}
                   </td>
                 </tr>
               ))}

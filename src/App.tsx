@@ -19,21 +19,23 @@ function App() {
     <BrowserRouter>
       <SolanaProvider>
         <AuthProvider>
-          <div className="min-h-screen bg-gray-50">
+          <div className="min-h-screen bg-dark text-light-text">
             <Header />
-            <Routes>
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/accounts" element={<AccountsPage />} />
-              <Route path="/account/new" element={<CreateAccount />} />
-              <Route path="/account/:id" element={<AccountDetails />} />
-              <Route path="/transfer" element={<TransferPage />} />
-              <Route path="/bill-pay" element={<BillPayPage />} />
-              <Route path="/cards" element={<CardsPage />} />
-              <Route path="/goals" element={<SavingsGoalsPage />} />
-              <Route path="/" element={<Navigate to="/dashboard" replace />} />
-            </Routes>
+            <main className="pt-4 pb-16">
+              <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/accounts" element={<AccountsPage />} />
+                <Route path="/account/new" element={<CreateAccount />} />
+                <Route path="/account/:id" element={<AccountDetails />} />
+                <Route path="/transfer" element={<TransferPage />} />
+                <Route path="/bill-pay" element={<BillPayPage />} />
+                <Route path="/cards" element={<CardsPage />} />
+                <Route path="/goals" element={<SavingsGoalsPage />} />
+                <Route path="/" element={<Navigate to="/dashboard" replace />} />
+              </Routes>
+            </main>
           </div>
         </AuthProvider>
       </SolanaProvider>

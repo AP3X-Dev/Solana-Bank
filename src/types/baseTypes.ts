@@ -37,36 +37,68 @@ export interface Notification {
 export interface Account {
   id: string;
   userId: string;
-  type: 'TRADING' | 'HODL' | 'SAVINGS';
+  type: 'trading' | 'hodl' | 'savings' | 'checking' | 'investment' | 'staking';
   balance: number;
-  accountNumber: string;
-  routingNumber: string;
+  solBalance?: number;
+  tokenBalances?: TokenBalance[];
+  accountNumber?: string;
+  routingNumber?: string;
   transactions: Transaction[];
-  scheduledPayments: ScheduledPayment[];
-  recurringTransfers: RecurringTransfer[];
+  scheduledPayments?: ScheduledPayment[];
+  recurringTransfers?: RecurringTransfer[];
   name: string;
+  description?: string;
   creditLimit?: number;
   interestRate?: number;
-  status: 'ACTIVE' | 'FROZEN' | 'CLOSED';
+  apy?: number;
+  status: 'active' | 'frozen' | 'closed';
+  visibility: 'visible' | 'hidden';
+  isDefault?: boolean;
   openedDate: string;
   lastActivityDate: string;
+  riskLevel?: 'low' | 'medium' | 'high';
+  tags?: string[];
+  metadata?: Record<string, any>;
+}
+
+export interface TokenBalance {
+  mint: string;
+  symbol: string;
+  name?: string;
+  amount: number;
+  decimals: number;
+  uiAmount: number;
+  logo?: string;
+  price?: number;
+  value?: number;
 }
 
 export interface Transaction {
   id: string;
-  date: string;
+  timestamp: string;
   amount: number;
-  type: 'DEPOSIT' | 'WITHDRAWAL' | 'TRANSFER' | 'PAYMENT' | 'FEE' | 'INTEREST';
-  status: 'PENDING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
-  description: string;
+  type: 'transfer' | 'token_transfer' | 'swap' | 'stake' | 'unstake' | 'create_account' | 'close_account' | 'custom' | 'deposit' | 'withdrawal' | 'payment' | 'fee' | 'interest';
+  status: 'pending' | 'confirmed' | 'finalized' | 'failed' | 'timeout' | 'rejected' | 'completed' | 'cancelled';
+  description?: string;
   category?: TransactionCategory;
   reference?: string;
   fromAccount?: string;
   toAccount?: string;
+  sender?: string;
+  recipient?: string;
+  signature?: string;
+  blockTime?: number;
+  slot?: number;
+  fee?: number;
+  confirmations?: number;
+  memo?: string;
+  tokenAddress?: string;
+  tokenAmount?: number;
+  tokenDecimals?: number;
   metadata?: Record<string, any>;
 }
 
-export type TransactionCategory = 
+export type TransactionCategory =
   | 'INCOME'
   | 'SALARY'
   | 'INVESTMENT'

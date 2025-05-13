@@ -3,8 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { SavingsGoal } from '../types';
 import { storage } from '../utils/storage';
-import { PiggyBank, ArrowLeft, Plus, Target, Trash2 } from 'lucide-react';
+import { PiggyBank, ArrowLeft, Plus, Target, Trash2, Calendar, DollarSign } from 'lucide-react';
 import { formatCurrency } from '../utils/format';
+import { Button } from '../components/Button';
+import { Card, CardGrid } from '../components/Card';
 
 const GOAL_CATEGORIES = [
   { value: 'EMERGENCY', label: 'Emergency Fund' },
@@ -144,62 +146,65 @@ export const SavingsGoalsPage = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-4xl">
+    <div className="container mx-auto px-4 py-6 max-w-4xl">
       <button
         onClick={() => navigate(-1)}
-        className="flex items-center text-gray-600 hover:text-gray-900 mb-6"
+        className="flex items-center text-muted-text hover:text-light-text mb-6 transition-colors"
       >
         <ArrowLeft size={20} className="mr-2" />
         Back
       </button>
 
-      <div className="bg-white rounded-lg shadow-md p-6">
+      <Card>
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center">
-            <PiggyBank className="text-indigo-600 mr-3" size={24} />
-            <h1 className="text-2xl font-bold text-gray-900">Savings Goals</h1>
+            <div className="p-2 rounded-lg bg-indigo-500/10 mr-3">
+              <PiggyBank className="text-indigo-500" size={20} />
+            </div>
+            <h1 className="text-xl font-bold text-light-text">Savings Goals</h1>
           </div>
           {!showNewGoalForm && (
-            <button
+            <Button
+              variant="primary"
+              size="sm"
+              icon={Plus}
               onClick={() => setShowNewGoalForm(true)}
-              className="flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
             >
-              <Plus size={20} className="mr-2" />
               New Goal
-            </button>
+            </Button>
           )}
         </div>
 
         {showNewGoalForm && (
-          <form onSubmit={handleCreateGoal} className="mb-8 p-6 bg-gray-50 rounded-lg">
-            <h2 className="text-lg font-semibold mb-4">Create New Savings Goal</h2>
+          <form onSubmit={handleCreateGoal} className="mb-8 p-6 bg-dark-light rounded-xl">
+            <h2 className="text-lg font-semibold mb-4 text-light-text">Create New Savings Goal</h2>
             {error && (
-              <div className="mb-4 bg-red-50 border border-red-400 text-red-700 px-4 py-3 rounded">
+              <div className="mb-4 bg-red-500/10 border border-red-500/30 text-red-400 px-4 py-3 rounded-xl">
                 {error}
               </div>
             )}
-            
+
             <div className="grid grid-cols-2 gap-4">
               <div className="col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-light-text mb-2">
                   Goal Name
                 </label>
                 <input
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                  className="block w-full rounded-xl border-dark-light bg-dark-card text-light-text shadow-sm focus:border-solana-blue focus:ring-solana-blue p-2.5"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-light-text mb-2">
                   Target Amount
                 </label>
-                <div className="relative rounded-md shadow-sm">
+                <div className="relative">
                   <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                    <span className="text-gray-500 sm:text-sm">$</span>
+                    <DollarSign size={16} className="text-muted-text" />
                   </div>
                   <input
                     type="number"
@@ -207,33 +212,38 @@ export const SavingsGoalsPage = () => {
                     step="0.01"
                     value={formData.targetAmount}
                     onChange={(e) => setFormData(prev => ({ ...prev, targetAmount: e.target.value }))}
-                    className="block w-full rounded-md border-gray-300 pl-7 focus:border-indigo-500 focus:ring-indigo-500"
+                    className="block w-full rounded-xl border-dark-light bg-dark-card text-light-text shadow-sm focus:border-solana-blue focus:ring-solana-blue p-2.5 pl-10"
                     required
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-light-text mb-2">
                   Target Date
                 </label>
-                <input
-                  type="date"
-                  value={formData.targetDate}
-                  onChange={(e) => setFormData(prev => ({ ...prev, targetDate: e.target.value }))}
-                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                  required
-                />
+                <div className="relative">
+                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                    <Calendar size={16} className="text-muted-text" />
+                  </div>
+                  <input
+                    type="date"
+                    value={formData.targetDate}
+                    onChange={(e) => setFormData(prev => ({ ...prev, targetDate: e.target.value }))}
+                    className="block w-full rounded-xl border-dark-light bg-dark-card text-light-text shadow-sm focus:border-solana-blue focus:ring-solana-blue p-2.5 pl-10"
+                    required
+                  />
+                </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-light-text mb-2">
                   Category
                 </label>
                 <select
                   value={formData.category}
                   onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
-                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                  className="block w-full rounded-xl border-dark-light bg-dark-card text-light-text shadow-sm focus:border-solana-blue focus:ring-solana-blue p-2.5"
                   required
                 >
                   {GOAL_CATEGORIES.map(category => (
@@ -245,13 +255,13 @@ export const SavingsGoalsPage = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-light-text mb-2">
                   Linked Account
                 </label>
                 <select
                   value={formData.accountId}
                   onChange={(e) => setFormData(prev => ({ ...prev, accountId: e.target.value }))}
-                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                  className="block w-full rounded-xl border-dark-light bg-dark-card text-light-text shadow-sm focus:border-solana-blue focus:ring-solana-blue p-2.5"
                   required
                 >
                   <option value="">Select account</option>
@@ -264,28 +274,28 @@ export const SavingsGoalsPage = () => {
               </div>
 
               <div className="col-span-2">
-                <div className="flex items-center mb-4">
+                <div className="flex items-center mb-4 p-3 rounded-xl bg-dark-card">
                   <input
                     type="checkbox"
                     id="autoSave"
                     checked={formData.autoSave}
                     onChange={(e) => setFormData(prev => ({ ...prev, autoSave: e.target.checked }))}
-                    className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                    className="h-4 w-4 text-solana-blue focus:ring-solana-blue border-dark-light rounded"
                   />
-                  <label htmlFor="autoSave" className="ml-2 block text-sm text-gray-900">
+                  <label htmlFor="autoSave" className="ml-2 block text-sm text-light-text">
                     Enable automatic savings
                   </label>
                 </div>
 
                 {formData.autoSave && (
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-4 p-4 rounded-xl bg-dark-card">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-light-text mb-2">
                         Auto-save Amount
                       </label>
-                      <div className="relative rounded-md shadow-sm">
+                      <div className="relative">
                         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                          <span className="text-gray-500 sm:text-sm">$</span>
+                          <DollarSign size={16} className="text-muted-text" />
                         </div>
                         <input
                           type="number"
@@ -293,20 +303,20 @@ export const SavingsGoalsPage = () => {
                           step="0.01"
                           value={formData.autoSaveAmount}
                           onChange={(e) => setFormData(prev => ({ ...prev, autoSaveAmount: e.target.value }))}
-                          className="block w-full rounded-md border-gray-300 pl-7 focus:border-indigo-500 focus:ring-indigo-500"
+                          className="block w-full rounded-xl border-dark-light bg-dark text-light-text shadow-sm focus:border-solana-blue focus:ring-solana-blue p-2.5 pl-10"
                           required={formData.autoSave}
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-light-text mb-2">
                         Frequency
                       </label>
                       <select
                         value={formData.autoSaveFrequency}
                         onChange={(e) => setFormData(prev => ({ ...prev, autoSaveFrequency: e.target.value }))}
-                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        className="block w-full rounded-xl border-dark-light bg-dark text-light-text shadow-sm focus:border-solana-blue focus:ring-solana-blue p-2.5"
                         required={formData.autoSave}
                       >
                         <option value="WEEKLY">Weekly</option>
@@ -319,109 +329,116 @@ export const SavingsGoalsPage = () => {
             </div>
 
             <div className="flex justify-end space-x-4 mt-6">
-              <button
+              <Button
                 type="button"
+                variant="secondary"
                 onClick={() => setShowNewGoalForm(false)}
-                className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
               >
                 Cancel
-              </button>
-              <button
+              </Button>
+              <Button
                 type="submit"
-                className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+                variant="primary"
+                icon={Plus}
               >
                 Create Goal
-              </button>
+              </Button>
             </div>
           </form>
         )}
 
-        <div className="grid gap-6">
+        <CardGrid columns={2}>
           {goals.map(goal => (
-            <div key={goal.id} className="bg-white border rounded-lg shadow-sm p-6">
+            <Card key={goal.id} className="p-6">
               <div className="flex justify-between items-start mb-4">
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900">{goal.name}</h3>
-                  <p className="text-sm text-gray-500">{goal.category}</p>
+                  <h3 className="text-lg font-semibold text-light-text">{goal.name}</h3>
+                  <p className="text-sm text-muted-text">{goal.category}</p>
                 </div>
                 <button
                   onClick={() => deleteGoal(goal.id)}
-                  className="text-gray-400 hover:text-red-500"
+                  className="text-muted-text hover:text-red-400 transition-colors"
                 >
                   <Trash2 size={20} />
                 </button>
               </div>
 
               <div className="mb-4">
-                <div className="flex justify-between text-sm text-gray-600 mb-1">
+                <div className="flex justify-between text-sm text-muted-text mb-1">
                   <span>Progress</span>
                   <span>{goal.progress.toFixed(1)}%</span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2.5">
+                <div className="w-full bg-dark-light rounded-full h-2.5">
                   <div
-                    className="bg-indigo-600 h-2.5 rounded-full"
+                    className="bg-solana-gradient h-2.5 rounded-full"
                     style={{ width: `${Math.min(100, goal.progress)}%` }}
                   ></div>
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4 mb-4">
-                <div>
-                  <p className="text-sm text-gray-500">Current Amount</p>
-                  <p className="text-lg font-semibold text-gray-900">
+                <div className="p-3 rounded-xl bg-dark-light">
+                  <p className="text-xs text-muted-text mb-1">Current Amount</p>
+                  <p className="text-lg font-semibold text-light-text">
                     {formatCurrency(goal.currentAmount)}
                   </p>
                 </div>
-                <div>
-                  <p className="text-sm text-gray-500">Target Amount</p>
-                  <p className="text-lg font-semibold text-gray-900">
+                <div className="p-3 rounded-xl bg-dark-light">
+                  <p className="text-xs text-muted-text mb-1">Target Amount</p>
+                  <p className="text-lg font-semibold text-light-text">
                     {formatCurrency(goal.targetAmount)}
                   </p>
                 </div>
               </div>
 
               <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <Target size={16} className="text-gray-400" />
-                  <span className="text-sm text-gray-500">
-                    Target Date: {new Date(goal.targetDate).toLocaleDateString()}
+                <div className="flex items-center space-x-2 p-2 rounded-lg bg-dark-light">
+                  <Target size={16} className="text-muted-text" />
+                  <span className="text-xs text-muted-text">
+                    {new Date(goal.targetDate).toLocaleDateString()}
                   </span>
                 </div>
-                
+
                 {goal.status === 'ACTIVE' && (
-                  <button
+                  <Button
+                    variant="primary"
+                    size="sm"
                     onClick={() => handleContribute(goal.id, 100)}
-                    className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
                   >
                     Quick Save $100
-                  </button>
+                  </Button>
                 )}
               </div>
 
               {goal.autoSave && (
-                <div className="mt-4 p-3 bg-gray-50 rounded-md">
-                  <p className="text-sm text-gray-600">
+                <div className="mt-4 p-3 bg-dark-light rounded-xl">
+                  <p className="text-sm text-muted-text flex items-center">
+                    <RefreshCcw size={14} className="mr-2 text-solana-blue" />
                     Auto-saving {formatCurrency(goal.autoSave.amount)} {goal.autoSave.frequency.toLowerCase()}
                   </p>
                 </div>
               )}
-            </div>
+            </Card>
           ))}
 
           {goals.length === 0 && !showNewGoalForm && (
-            <div className="text-center py-8 text-gray-500">
-              <PiggyBank size={48} className="mx-auto mb-4 text-gray-400" />
-              <p>You don't have any savings goals yet.</p>
-              <button
+            <div className="col-span-full text-center py-12 bg-dark-light rounded-xl">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-dark-card flex items-center justify-center">
+                <PiggyBank size={32} className="text-muted-text" />
+              </div>
+              <p className="text-muted-text mb-4">You don't have any savings goals yet.</p>
+              <Button
+                variant="primary"
+                icon={Plus}
                 onClick={() => setShowNewGoalForm(true)}
-                className="mt-4 text-indigo-600 hover:text-indigo-700"
+                className="mx-auto"
               >
                 Create your first goal
-              </button>
+              </Button>
             </div>
           )}
-        </div>
-      </div>
+        </CardGrid>
+      </Card>
     </div>
   );
 };

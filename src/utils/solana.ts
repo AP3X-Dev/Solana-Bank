@@ -1,6 +1,74 @@
-import { Connection, PublicKey, LAMPORTS_PER_SOL, Transaction, SystemProgram } from '@solana/web3.js';
-import { TOKEN_PROGRAM_ID, getAssociatedTokenAddress, createAssociatedTokenAccountInstruction, createTransferInstruction } from '@solana/spl-token';
+import { Connection, PublicKey, LAMPORTS_PER_SOL, Transaction, SystemProgram, TransactionInstruction } from '@solana/web3.js';
+import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import { WalletContextState } from '@solana/wallet-adapter-react';
+
+// Define constants
+const ASSOCIATED_TOKEN_PROGRAM_ID = new PublicKey('ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL');
+
+// Helper function to get associated token address
+async function getAssociatedTokenAddress(
+  mint: PublicKey,
+  owner: PublicKey
+): Promise<PublicKey> {
+  return await PublicKey.findProgramAddress(
+    [owner.toBuffer(), TOKEN_PROGRAM_ID.toBuffer(), mint.toBuffer()],
+    ASSOCIATED_TOKEN_PROGRAM_ID
+  ).then(([address]) => address);
+}
+
+// Helper function to create associated token account instruction
+function createAssociatedTokenAccountInstruction(
+  payer: PublicKey,
+  associatedToken: PublicKey,
+  owner: PublicKey,
+  mint: PublicKey
+): TransactionInstruction {
+  return new TransactionInstruction({
+    keys: [
+      { pubkey: payer, isSigner: true, isWritable: true },
+      { pubkey: associatedToken, isSigner: false, isWritable: true },
+      { pubkey: owner, isSigner: false, isWritable: false },
+      { pubkey: mint, isSigner: false, isWritable: false },
+      { pubkey: SystemProgram.programId, isSigner: false, isWritable: false },
+      { pubkey: TOKEN_PROGRAM_ID, isSigner: false, isWritable: false },
+      { pubkey: ASSOCIATED_TOKEN_PROGRAM_ID, isSigner: false, isWritable: false },
+    ],
+    programId: ASSOCIATED_TOKEN_PROGRAM_ID,
+    data: Buffer.from([]),
+  });
+}
+
+// Helper function to create transfer instruction
+function createTransferInstruction(
+  source: PublicKey,
+  destination: PublicKey,
+  owner: PublicKey,
+  amount: number
+): TransactionInstruction {
+  const dataLayout = {
+    instruction: 3, // Transfer instruction
+    amount: BigInt(amount),
+  };
+
+  // Create a buffer with the instruction data
+  const data = Buffer.alloc(9); // 1 byte for instruction, 8 bytes for amount
+  data.writeUInt8(dataLayout.instruction, 0);
+
+  // Write the amount as a 64-bit unsigned integer (little-endian)
+  const amountBuf = Buffer.alloc(8);
+  amountBuf.writeBigUInt64LE(dataLayout.amount, 0);
+  amountBuf.copy(data, 1);
+
+  return new TransactionInstruction({
+    keys: [
+      { pubkey: source, isSigner: false, isWritable: true },
+      { pubkey: destination, isSigner: false, isWritable: true },
+      { pubkey: owner, isSigner: true, isWritable: false },
+    ],
+    programId: TOKEN_PROGRAM_ID,
+    data,
+  });
+}
 
 export const SOL_DECIMALS = LAMPORTS_PER_SOL;
 
@@ -68,7 +136,7 @@ export const transferTokens = async (
         tokenMint,
         wallet.publicKey
       );
-      
+
       const toTokenAccount = await getAssociatedTokenAddress(
         tokenMint,
         recipient
@@ -76,7 +144,7 @@ export const transferTokens = async (
 
       // Check if recipient's token account exists
       const recipientTokenAccount = await connection.getAccountInfo(toTokenAccount);
-      
+
       if (!recipientTokenAccount) {
         // Create recipient's associated token account if it doesn't exist
         transaction.add(
@@ -104,13 +172,13 @@ export const transferTokens = async (
         preflightCommitment: 'confirmed',
         maxRetries: 3
       });
-      
+
       await connection.confirmTransaction({
         signature,
         blockhash: recentBlockhash.blockhash,
         lastValidBlockHeight: recentBlockhash.lastValidBlockHeight
       }, 'confirmed');
-      
+
       return signature;
     } catch (error) {
       console.error('Transaction failed:', error);
