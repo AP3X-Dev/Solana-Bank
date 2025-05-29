@@ -1,293 +1,234 @@
-# SolanaBank - Enhanced Web3 Banking Platform
+# 🏦 Solana Bank Pro - Next-Generation Blockchain Banking
 
-![SolanaBank](https://images.unsplash.com/photo-1605792657660-596af9009e82?auto=format&fit=crop&w=1200&h=400&q=80)
+A revolutionary banking experience built on the Solana blockchain that combines the familiarity of traditional banking with the power of decentralized finance. Experience seamless multi-wallet management, real-time analytics, and modern banking features designed for the crypto-native user.
 
-A powerful, secure, and feature-rich banking application built on the Solana blockchain. Experience traditional banking features powered by cutting-edge Web3 technology with enterprise-grade security and performance.
+![Solana Bank Pro](https://img.shields.io/badge/Solana-Bank%20Pro-00FFC8?style=for-the-badge&logo=solana)
+![Version](https://img.shields.io/badge/version-2.0.0-blue?style=for-the-badge)
+![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
 
-## 🚀 Features
+## ✨ Features
 
-### 💰 Core Banking
-- **Multi-wallet Support**: Connect with Phantom, Solflare, Ledger, and other popular Solana wallets
-- **Advanced Account Management**:
-  - Trading accounts for active transactions
-  - HODL accounts for long-term investments
-  - Savings accounts with interest tracking
-  - Staking accounts for yield generation
-  - Investment accounts for diversified portfolios
-- **Comprehensive Transaction System**:
-  - Send and receive SOL with enhanced security
-  - Full SPL token support with automatic account creation
-  - Cross-chain bridging capabilities (coming soon)
-  - Detailed transaction history with advanced filtering
-  - Real-time balance updates with websocket support
+### 🏛️ **Banking-Grade Experience**
+- **Multi-Account Management**: Create unlimited accounts (Checking, Savings, Trading, Staking, HODL)
+- **Real-time Portfolio Tracking**: Live balance updates and performance analytics
+- **Transaction History**: Comprehensive transaction management with categorization
+- **Savings Goals**: Set and track financial objectives with automated savings
+- **Bill Pay & Transfers**: Schedule payments and recurring transfers
 
-### 🔒 Enterprise-Grade Security
-- **Enhanced Authentication**:
-  - Secure wallet signature-based authentication
-  - Session management with automatic timeouts
-  - Optional two-factor authentication
-- **Transaction Security**:
-  - Multi-level transaction validation
-  - Spending limits and controls
-  - Suspicious activity detection
-  - Transaction simulation before submission
-- **Data Protection**:
-  - End-to-end encryption for sensitive data
-  - Secure local storage with encryption
-  - Privacy-focused design
+### 🔗 **Advanced Blockchain Integration**
+- **Multi-Wallet Support**: Phantom, Solflare, and all major Solana wallets
+- **Token Management**: Support for SPL tokens with automatic discovery
+- **DeFi Integration**: Built-in staking and yield farming capabilities
+- **Cross-Chain Bridge**: (Coming Soon) Bridge assets from other blockchains
+- **NFT Portfolio**: View and manage your NFT collections
 
-### 📊 Advanced Analytics
-- **Portfolio Intelligence**:
-  - Real-time portfolio analysis and performance tracking
-  - Asset allocation visualization
-  - Risk assessment and diversification scoring
-  - Historical performance comparisons
-- **Spending Insights**:
-  - Detailed spending breakdowns by category
-  - Trend analysis across multiple time periods
-  - Budget tracking and recommendations
-  - Predictive spending forecasts
-- **Transaction Analytics**:
-  - Success rates and network performance metrics
-  - Fee optimization suggestions
-  - Transaction pattern recognition
-  - Custom reports for any time period
+### 🎨 **Modern User Interface**
+- **Dark/Light Themes**: Adaptive theming with system preference detection
+- **Mobile-First Design**: Responsive design optimized for all devices
+- **Smooth Animations**: Framer Motion powered micro-interactions
+- **Accessibility**: WCAG 2.1 AA compliant for inclusive design
+- **PWA Support**: Install as a native app on any device
 
-### 🌐 Network Resilience
-- **Multi-network Support**:
-  - Mainnet, Testnet, Devnet, and custom RPC endpoints
-  - Automatic network switching based on performance
-  - Network status monitoring
-- **Offline Capabilities**:
-  - Continue using the app even when offline
-  - Automatic synchronization when back online
-  - Transaction queueing during network outages
-  - Graceful degradation of features
+### 📊 **Advanced Analytics**
+- **Portfolio Insights**: Real-time performance tracking and analytics
+- **Risk Assessment**: Automated portfolio risk scoring
+- **Market Data**: Live price feeds and market analysis
+- **Tax Reporting**: Export transaction data for tax purposes
+- **Spending Analytics**: Categorized spending insights and budgeting tools
 
-### 📱 Enhanced User Experience
-- **Responsive Design**: Optimized for all devices from mobile to desktop
-- **Personalization**: Customizable dashboard and widgets
-- **Theme Support**: Dark/Light mode and custom color schemes
-- **Notifications**: Real-time alerts for transactions, security events, and price movements
+## 🚀 Tech Stack
 
-### 🎯 Financial Planning
-- **Enhanced Savings Goals**:
-  - Create custom savings targets with detailed tracking
-  - Smart goal recommendations based on spending patterns
-  - Automatic contributions with flexible scheduling
-  - Goal sharing and social features
-- **Advanced Bill Pay**:
-  - Schedule one-time or recurring payments
-  - Intelligent payment reminders
-  - Vendor management system
-  - Payment optimization recommendations
+### **Frontend Architecture**
+- **React 18**: Latest React with Concurrent Features and Suspense
+- **TypeScript**: Full type safety and enhanced developer experience
+- **Vite**: Lightning-fast build tool with HMR
+- **Tailwind CSS**: Utility-first CSS framework with custom design system
 
-## 🛠️ Technical Architecture
+### **State Management & Data**
+- **Zustand**: Lightweight state management with persistence
+- **TanStack Query**: Advanced data fetching with caching and synchronization
+- **React Hook Form**: Performant forms with validation
+- **Zod**: Runtime type validation and schema parsing
 
-### Frontend
-- **⚛️ React 18+**: Modern component-based UI architecture with hooks and context
-- **📘 TypeScript**: Type-safe code for better reliability and developer experience
-- **🎨 Tailwind CSS**: Utility-first CSS framework for responsive design
-- **⚡ Vite**: Lightning-fast build tool and development server
+### **Blockchain & Web3**
+- **Solana Web3.js**: Official Solana JavaScript SDK
+- **Wallet Adapter**: Universal wallet connection framework
+- **SPL Token**: Support for all Solana Program Library tokens
+- **Anchor**: Smart contract interaction framework
 
-### Blockchain Integration
-- **🔗 @solana/web3.js**: Core Solana blockchain interaction with enhanced error handling
-- **🪙 @solana/spl-token**: Comprehensive SPL token management with automatic account creation
-- **👛 @solana/wallet-adapter**: Multi-wallet support with advanced connection management
-- **🔄 Transaction Service**: Robust transaction creation, validation, and submission
+### **UI/UX & Animations**
+- **Framer Motion**: Production-ready motion library
+- **Lucide React**: Beautiful, customizable icons
+- **React Hot Toast**: Elegant notification system
+- **Class Variance Authority**: Type-safe component variants
 
-### Data Management
-- **🌐 API Integration**: RESTful API service with automatic offline fallback
-- **💾 Offline Storage**: IndexedDB/localStorage with encryption for offline functionality
-- **🔄 Synchronization**: Intelligent data syncing with conflict resolution
-- **🧠 State Management**: Context API with optimized re-rendering
+### **Development & Build**
+- **Vitest**: Fast unit testing framework
+- **ESLint & Prettier**: Code quality and formatting
+- **PWA Plugin**: Progressive Web App capabilities
+- **Bundle Analyzer**: Optimize bundle size and performance
 
-### Security
-- **🔐 Cryptographic Verification**: Advanced signature verification and validation
-- **⏱️ Session Management**: Secure, time-limited sessions with refresh capabilities
-- **🛡️ Transaction Protection**: Multi-level validation and simulation before submission
-- **🔍 Error Handling**: Comprehensive error capture, logging, and recovery
-
-### Analytics
-- **📊 Data Processing**: Real-time data aggregation and analysis
-- **📈 Visualization**: Interactive charts and graphs for financial insights
-- **🧮 Calculation Engine**: Advanced financial calculations and projections
-- **📱 Responsive Design**: Analytics optimized for all device sizes
-
-## 🚀 Getting Started
+## 🛠️ Getting Started
 
 ### Prerequisites
 
-- Node.js 18+
-- npm or yarn
-- A Solana wallet (Phantom, Solflare, or other supported wallets)
-- Optional: Solana CLI for advanced development
+- **Node.js** 18+ (LTS recommended)
+- **npm** or **yarn** or **pnpm**
+- **Solana Wallet** (Phantom, Solflare, etc.)
+- **Git** for version control
 
-### Installation
+### Quick Start
 
-1. Clone the repository:
+1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/solana-bank.git
-cd solana-bank
+git clone https://github.com/your-username/solana-bank-pro.git
+cd solana-bank-pro
 ```
 
-2. Install dependencies:
+2. **Install dependencies**
 ```bash
 npm install
+# or
+yarn install
+# or
+pnpm install
 ```
 
-3. Create a `.env` file with your configuration:
-```
-VITE_RPC_ENDPOINT=https://api.mainnet-beta.solana.com
-VITE_API_BASE_URL=https://api.solanabank.example.com/v1
-VITE_ENVIRONMENT=development
+3. **Set up environment variables**
+```bash
+cp .env.example .env
+# Edit .env with your configuration
 ```
 
-4. Start the development server:
+4. **Start development server**
 ```bash
 npm run dev
 ```
 
-5. Open your browser and navigate to `http://localhost:5173`
+5. **Open your browser**
+Navigate to `http://localhost:3000` and connect your wallet!
 
-### Network Configuration
+### Environment Configuration
 
-SolanaBank supports multiple Solana networks:
+Create a `.env` file in the root directory:
 
-- **Mainnet**: Production environment with real assets
-- **Testnet**: Testing environment with test tokens
-- **Devnet**: Development environment with free tokens
-- **Localnet**: Local development with simulated blockchain
-- **Custom**: Connect to any custom RPC endpoint
+```env
+# Solana Configuration
+VITE_SOLANA_NETWORK=devnet
+VITE_SOLANA_RPC_ENDPOINT=https://api.devnet.solana.com
 
-You can switch networks in the application settings or configure the default in your `.env` file.
+# API Configuration
+VITE_API_BASE_URL=https://api.solanabank.pro
+VITE_SUPABASE_URL=your-supabase-url
+VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
 
-## 📱 Usage Guide
+# Feature Flags
+VITE_ENABLE_ANALYTICS=true
+VITE_ENABLE_NOTIFICATIONS=true
+VITE_ENABLE_PWA=true
 
-### Connecting Your Wallet
+# Development
+VITE_DEV_MODE=true
+VITE_SHOW_DEVTOOLS=true
+```
 
-1. Click the "Connect Wallet" button in the header
-2. Select your preferred wallet from the modal
-3. Approve the connection request in your wallet
-4. Complete the secure authentication process
-5. Your wallet is now connected with enhanced security
+## 📁 Project Architecture
 
-### Managing Accounts
+```
+solana-bank-pro/
+├── public/                 # Static assets and PWA files
+├── src/
+│   ├── components/         # Reusable UI components
+│   │   ├── ui/            # Base UI components (Button, Card, etc.)
+│   │   └── features/      # Feature-specific components
+│   ├── hooks/             # Custom React hooks
+│   ├── lib/               # Utility libraries and configurations
+│   ├── pages/             # Page components and routing
+│   ├── services/          # API and blockchain services
+│   ├── store/             # Global state management (Zustand)
+│   ├── types/             # TypeScript type definitions
+│   └── utils/             # Helper functions and utilities
+├── tests/                 # Test files and utilities
+├── docs/                  # Documentation and guides
+└── scripts/               # Build and deployment scripts
+```
 
-1. Navigate to "Accounts" from the dashboard
-2. Click "Create New Account" to add an account
-3. Select from multiple account types:
-   - Trading: For active transactions
-   - HODL: For long-term investments
-   - Savings: With interest tracking
-   - Staking: For yield generation
-   - Investment: For diversified portfolios
-4. Customize your account settings and preferences
-5. Monitor all accounts from the unified dashboard
+## 🎯 Usage Guide
 
-### Executing Transactions
+### 1. **Wallet Connection**
+- Click "Connect Wallet" in the header
+- Select your preferred Solana wallet
+- Approve the connection request
+- Your wallet is now connected and ready to use
 
-1. Go to the "Send" section from the navigation
-2. Select source account and asset (SOL or tokens)
-3. Enter recipient's Solana address or scan QR code
-4. Specify amount and optional memo
-5. Review transaction details including network fee
-6. Confirm and sign the transaction with your wallet
-7. Track the transaction status in real-time
+### 2. **Account Management**
+- Navigate to "Create Account" to set up new accounts
+- Choose from different account types:
+  - **Checking**: For daily transactions
+  - **Savings**: For long-term storage with goals
+  - **Trading**: For active trading and DeFi
+  - **Staking**: For earning rewards
+  - **HODL**: For long-term holding
 
-### Token Management
+### 3. **Transactions**
+- Send SOL or SPL tokens to any wallet address
+- Schedule recurring payments and transfers
+- Set up automatic savings contributions
+- Track all transactions with detailed history
 
-1. Visit the "Tokens" section
-2. View all your SPL tokens with balances and values
-3. Send tokens to any Solana address
-4. Receive tokens with your personalized QR code
-5. Track token price history and performance
+### 4. **Analytics & Insights**
+- View real-time portfolio performance
+- Analyze spending patterns and trends
+- Set and track financial goals
+- Export data for tax reporting
 
-### Financial Analytics
+## 🧪 Development
 
-1. Navigate to the "Analytics" dashboard
-2. Select time period (day, week, month, year)
-3. View portfolio performance and asset allocation
-4. Analyze spending patterns and category breakdowns
-5. Export custom reports for tax or personal records
+### Available Scripts
 
-### Setting Savings Goals
+```bash
+# Development
+npm run dev              # Start development server
+npm run dev:host         # Start with network access
 
-1. Go to "Savings Goals" from the dashboard
-2. Click "New Goal" to create a target
-3. Select goal category and customize details
-4. Set target amount and timeline
-5. Configure automatic contributions (optional)
-6. Track progress with visual indicators
-7. Receive achievement notifications
+# Building
+npm run build            # Build for production
+npm run preview          # Preview production build
+npm run analyze          # Analyze bundle size
 
-## 🔒 Security Features
+# Testing
+npm run test             # Run unit tests
+npm run test:ui          # Run tests with UI
+npm run test:coverage    # Generate coverage report
 
-### Enhanced Authentication
-- **Wallet Signature Verification**: Cryptographic proof of wallet ownership
-- **Session Management**: Secure, time-limited sessions with automatic timeouts
-- **Two-Factor Authentication**: Optional additional security layer
-- **Device Recognition**: Identify and authorize trusted devices
+# Code Quality
+npm run lint             # Run ESLint
+npm run lint:fix         # Fix ESLint issues
+npm run format           # Format code with Prettier
+npm run type-check       # TypeScript type checking
+```
 
-### Transaction Security
-- **Multi-level Validation**: Prevent errors and attacks
-- **Spending Limits**: Configurable transaction limits
-- **Suspicious Activity Detection**: AI-powered fraud prevention
-- **Transaction Simulation**: Preview outcomes before submission
+## 🔒 Security
 
-### Data Protection
-- **End-to-End Encryption**: Secure communication channels
-- **Secure Storage**: Encrypted local data storage
-- **Privacy Controls**: Granular data sharing settings
-- **Audit Logging**: Comprehensive security event tracking
+### Best Practices Implemented
+
+- **Private Key Security**: Never store or transmit private keys
+- **Transaction Validation**: All transactions are validated before signing
+- **Rate Limiting**: API rate limiting to prevent abuse
+- **Input Sanitization**: All user inputs are sanitized and validated
+- **HTTPS Only**: All communications use HTTPS encryption
 
 ## 🤝 Contributing
 
-We welcome contributions from the community! Here's how you can help:
+We welcome contributions from the community! Please read our [Contributing Guide](CONTRIBUTING.md) for details.
 
 ### Development Workflow
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Commit your changes: `git commit -m 'Add some amazing feature'`
-4. Push to the branch: `git push origin feature/amazing-feature`
-5. Open a Pull Request
-
-### Contribution Guidelines
-
-- Follow the existing code style and conventions
-- Write tests for new features
-- Keep pull requests focused on a single feature
-- Document your code with comments
-- Update documentation as needed
-
-See our [Contributing Guidelines](CONTRIBUTING.md) for more details.
-
-## 📋 Project Roadmap
-
-### Q2 2023
-- ✅ Enhanced security layer implementation
-- ✅ Multi-wallet support expansion
-- ✅ Offline mode capabilities
-- ✅ Advanced analytics dashboard
-
-### Q3 2023
-- 🔄 SPL token management system
-- 🔄 Cross-chain bridging integration
-- 🔄 DeFi protocol connections
-- 🔄 Mobile application development
-
-### Q4 2023
-- 📅 NFT portfolio management
-- 📅 Smart contract automation
-- 📅 DAO governance integration
-- 📅 Enterprise account features
-
-### Q1 2024
-- 🔮 AI-powered financial insights
-- 🔮 Advanced security features
-- 🔮 Institutional API access
-- 🔮 Global payment network
+1. **Fork** the repository
+2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
+3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
+4. **Push** to the branch (`git push origin feature/amazing-feature`)
+5. **Open** a Pull Request
 
 ## 📄 License
 
@@ -295,18 +236,18 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- Solana Foundation for blockchain infrastructure
-- Solana Wallet Adapter contributors
-- The amazing Web3 community
-- All our open-source dependencies
-
-## 📞 Support
-
-For support, please:
-- Open an issue in the GitHub repository
-- Join our [Discord community](https://discord.gg/solanabank)
-- Contact our team at support@solanabank.example.com
+- **Solana Foundation** for the incredible blockchain infrastructure
+- **Wallet Adapter Team** for seamless wallet integration
+- **React Community** for the amazing ecosystem
+- **Open Source Contributors** who make projects like this possible
 
 ---
 
-Built with ❤️ by the SolanaBank Team
+<div align="center">
+  <p>Built with ❤️ for the Solana ecosystem</p>
+  <p>
+    <a href="https://solana.com">
+      <img src="https://img.shields.io/badge/Powered%20by-Solana-00FFC8?style=flat&logo=solana" alt="Powered by Solana" />
+    </a>
+  </p>
+</div>

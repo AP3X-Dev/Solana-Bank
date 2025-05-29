@@ -7,7 +7,8 @@ import {
   authenticateWithWallet,
   isAuthSessionValid,
   clearAuthSession,
-  getOrCreateUser
+  getOrCreateUser,
+  createAuthSession
 } from '../services/authService';
 import { WALLET_CONFIG } from '../config/appConfig';
 
@@ -46,11 +47,52 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           if (wallet.publicKey) {
             const user = await getOrCreateUser(wallet);
             if (user) {
-              console.log("User found during initialization");
+              console.log("User found during initialization:", user);
               setUser(user);
             } else {
               console.log("No user found, clearing session");
               clearAuthSession();
+            }
+          }
+        } else {
+          // No valid session, check if we have a current user in localStorage
+          const currentUser = fallbackService.users.getCurrentUser();
+          if (currentUser) {
+            console.log("Found current user in localStorage:", currentUser);
+            setUser(currentUser);
+          } else {
+            console.log("No current user found, creating demo user for development");
+            // In development mode, create a demo user if none exists
+            if (WALLET_CONFIG.SKIP_SIGNATURE_VERIFICATION) {
+              const demoUser = {
+                name: 'Demo User',
+                firstName: 'Demo',
+                lastName: 'User',
+                email: 'demo@solanabank.pro',
+                walletAddress: 'demo-wallet-address',
+                notifications: [],
+                preferences: {
+                  theme: 'dark' as const,
+                  notificationsEnabled: true,
+                  twoFactorEnabled: false
+                },
+                transactions: []
+              };
+
+              try {
+                const newUser = fallbackService.users.create(demoUser);
+                fallbackService.users.setCurrentUser(newUser);
+                setUser(newUser);
+                console.log("Demo user created:", newUser);
+              } catch (error) {
+                console.log("Demo user might already exist, trying to get existing user");
+                const existingUser = fallbackService.users.getByWalletAddress('demo-wallet-address');
+                if (existingUser) {
+                  fallbackService.users.setCurrentUser(existingUser);
+                  setUser(existingUser);
+                  console.log("Using existing demo user:", existingUser);
+                }
+              }
             }
           }
         }
