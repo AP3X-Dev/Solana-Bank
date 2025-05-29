@@ -6,6 +6,13 @@ A revolutionary banking experience built on the Solana blockchain that combines 
 ![Version](https://img.shields.io/badge/version-2.0.0-blue?style=for-the-badge)
 ![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
 
+## 📸 Application Preview
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/AP3X-Dev/Solana-Bank/refs/heads/main/public/screencapture.png" alt="Solana Bank Pro Dashboard" width="100%" />
+  <p><em>Modern banking interface with real-time portfolio tracking and seamless wallet integration</em></p>
+</div>
+
 ## ✨ Features
 
 ### 🏛️ **Banking-Grade Experience**
